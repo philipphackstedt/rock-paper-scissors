@@ -1,0 +1,61 @@
+<script>
+let zeichen = ['rock', 'paper', 'scissor']
+let message = "Bitte " + zeichen[0] + ", " + zeichen[1] + " oder " + zeichen[2] + " eingeben!"
+let messageWrongInput = "' ist eine falsche Eingabe. Bitte nur " + zeichen[0] + ", " + zeichen[1] + " oder " + zeichen[2] + " eingeben!"
+let punkteComputer = 0
+let punktePlayer = 0
+let runden = 5
+let index = 0
+
+function game(){
+    while(index < runden){
+        play(prompt(message));
+        index++
+        console.log("Computer " + punkteComputer + ", You " + punktePlayer)
+    }
+    reset()
+}
+
+function testInputValid(input){
+    if(input){
+        return zeichen.indexOf(input.toLowerCase()) >=0
+    }
+    return false
+}
+
+function play(playerSelection){
+    return ergebnis(playerSelection, computerPlay())
+}
+
+function computerPlay(){
+    return zeichen[Math.floor(Math.random()*zeichen.length)]
+}
+
+function ergebnis(playerSelection, computerSelection){
+    if(!testInputValid(playerSelection)){
+        punkteComputer++
+        console.log("You Loose! '" + playerSelection + messageWrongInput)
+        return
+    }
+    if(playerSelection.toLowerCase() == computerSelection){
+        console.log("Match. No Winner, no looser, no fun at all!")
+        return
+    }
+    let csAsInt = zeichen.indexOf(computerSelection)
+    let psAsInt = zeichen.indexOf(playerSelection.toLowerCase())
+    if((csAsInt == 0 && psAsInt == 1) || (csAsInt == 1 && psAsInt == 2) || (csAsInt == 2 && psAsInt == 0)) {
+        punktePlayer++
+        console.log("You Win! " + playerSelection + " beats " + computerSelection)
+        return
+    }
+    punkteComputer++
+    console.log("You Loose! " + computerSelection + " beats " + playerSelection)
+}
+
+function reset(){
+    punkteComputer = 0
+    punktePlayer = 0
+    index = 0
+}
+
+</script>
